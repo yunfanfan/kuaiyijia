@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/carId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="输入车牌" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="搜索" />
+
+
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/info_carId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="车牌号:XXXXXX"/>
+                <TextView
+                    android:id="@+id/info_carType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="车辆类型:XXXXXX"/>
+                <TextView
+                    android:id="@+id/info_carDimension"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="货箱长宽高:XXXXXX"/>
+                <TextView
+                    android:id="@+id/info_carCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="载重:XXXXXX"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btn_carLoadCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:text="生成装车码"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
