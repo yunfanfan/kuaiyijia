@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mIntentSearchCarNo = new Intent(this, searchCarNo.class);
+        mIntentScanCarLoad = new Intent(this, scanCarLoad.class);
 
         Button btn1 = findViewById(R.id.button1);
         Button btn2 = findViewById(R.id.button2);

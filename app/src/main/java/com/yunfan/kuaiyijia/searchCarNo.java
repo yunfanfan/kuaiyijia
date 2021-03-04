@@ -16,11 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import org.w3c.dom.Text;
 
@@ -120,9 +115,9 @@ public class searchCarNo extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Message msg = new Message();
                 ResultSet rs = database.SelectFromData("*", tabName, tabTopName, value);
                 try {
-                    Message msg = new Message();
                     msg.what = 1;
                     Bundle bundle = new Bundle();
                     while (rs.next()) {
@@ -132,11 +127,11 @@ public class searchCarNo extends Activity {
                         bundle.putString("mV_width", rs.getString("HC_WIDTH"));
                         bundle.putString("mV_height", rs.getString("HC_HEIGHT"));
                         msg.setData(bundle);
-                        mHandler.sendMessage(msg);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                mHandler.sendMessage(msg);
             }
         }).start();
         database.closeConnect();
