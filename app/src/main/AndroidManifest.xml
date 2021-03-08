@@ -35,6 +35,8 @@
         <activity android:name=".searchCarNo"/>
         <activity android:name=".getCarLoadCode"/>
         <activity android:name=".scanCarLoad"/>
+        <activity android:name=".scanCarGo"/>
+        <activity android:name=".scanUnload"/>
     </application>
 
 </manifest>

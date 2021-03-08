@@ -25,17 +25,17 @@ public class scanCarLoad extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scancarload);
 
-        mBtScan = findViewById(R.id.bt_scan);
+        mBtScan = findViewById(R.id.bt_scanCarLoad);
         mBtScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                go(v);
+                scan(v);
             }
         });
     }
 
 
-    public void go(View view) {
+    public void scan(View view) {
         Intent intent = new Intent(new Intent(this, CaptureActivity.class));
         startActivityForResult(intent, REQUEST_CODE_SCAN);
         while (mResultScan != null) {
