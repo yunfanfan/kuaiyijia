@@ -49,11 +49,12 @@ public class TestDatabase {
 
     }
     @Test
-    public void testSelect() {
+    public void testSelect() throws SQLException {
         String tabName = "PUB_VEHICLE";
         String tabTopName = "V_NO";
-        String value = "渝A66666";
-        database.SelectFromData("*", tabName, tabTopName, value);
+        String value = "渝A66667";
+        ResultSet rs = database.SelectFromData("*", tabName, tabTopName, value);
+        Log.d(TAG, "testSelect: "+rs.isBeforeFirst());
 
         database.closeConnect();
 

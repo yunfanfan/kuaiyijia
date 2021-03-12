@@ -30,7 +30,7 @@ public class receiveGoods extends Activity {
                     //接收订单查询结果
                     //mV_id = msg.getData().getString("mV_id");//接受msg传递过来的参数
                     Log.i("lgq","id: ");
-                    //查询成功，接单，修改状态为接单
+                    //查询成功，接单，创建新订单表项
                     //然后进入选择运价页面，新建一个activity，跳转
                     //下一个运价界面有个按钮，扫描商品条码，每扫完一个，就选择对应运价。
                     break;

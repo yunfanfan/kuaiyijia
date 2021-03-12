@@ -1,6 +1,8 @@
 package com.yunfan.kuaiyijia;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class searchCarNo extends Activity {
     private String mV_width;
     private String mV_height;
     private Button mBtnCarLoadCode;
+    private boolean isNullResultSet;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -54,6 +57,30 @@ public class searchCarNo extends Activity {
                     mInfoCarId.setText("车牌号：" + mV_no);
                     mInfoCarDimension.setText("货箱长宽高:" + mV_lenght + "m × "+ mV_width + "m × "+ mV_height + "m");
                     break;
+                case 2 :
+                    isNullResultSet = msg.getData().getBoolean("isNullResultSet");
+                    Log.i(TAG, "handleMessage: isNullResultSet" + isNullResultSet);
+                    //如果查询结果为空就要重新输入车牌
+                    if (!isNullResultSet) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(searchCarNo.this);
+                        builder.setTitle("提醒！")
+                                .setMessage("无所查询车牌，请重新输入..")
+                                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,
+                                                        int which) {
+                                    }
+                                })
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,
+                                                        int which) {
+                                    }
+                                })
+                                .show();
+                        //Toast.makeText(searchCarNo.this, "无所查询车牌，请重新输入..", Toast.LENGTH_SHORT).show();
+                        //return;
+                    }
             }
         }
     };
@@ -110,15 +137,25 @@ public class searchCarNo extends Activity {
         String tabName = "PUB_VEHICLE";
         String tabTopName = "V_NO";
         //value值之后从输入框中得到
-        //String value = carId;
-        String value = "渝A66666";
+        String value = carId;
+//        String value = "渝A66666";
+        //测试判空操作
+        //String value = "渝A66665";
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Message msg = new Message();
+                Message msgCarInfo = new Message();
+                Message msgCarIsNull = new Message();
                 ResultSet rs = database.SelectFromData("*", tabName, tabTopName, value);
                 try {
-                    msg.what = 1;
+                    //对本次查询判空，传递消息出去
+                    msgCarIsNull.what = 2;
+                    Bundle bCarIsNull = new Bundle();
+                    bCarIsNull.putBoolean("isNullResultSet",rs.isBeforeFirst());
+                    msgCarIsNull.setData(bCarIsNull);
+                    mHandler.sendMessage(msgCarIsNull);
+
+                    msgCarInfo.what = 1;
                     Bundle bundle = new Bundle();
                     while (rs.next()) {
                         bundle.putString("mV_id", rs.getString("V_ID"));
@@ -126,14 +163,14 @@ public class searchCarNo extends Activity {
                         bundle.putString("mV_lenght", rs.getString("HC_LENGHT"));
                         bundle.putString("mV_width", rs.getString("HC_WIDTH"));
                         bundle.putString("mV_height", rs.getString("HC_HEIGHT"));
-                        msg.setData(bundle);
+                        msgCarInfo.setData(bundle);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                mHandler.sendMessage(msg);
+                mHandler.sendMessage(msgCarInfo);
             }
         }).start();
-        database.closeConnect();
+        //database.closeConnect();
     }
 }
